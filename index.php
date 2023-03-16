@@ -10,7 +10,7 @@
 
       $weatherArray = json_decode($weatherApiData, true);
 
-      print_r($weatherArray);
+      
       
 
       $city = $weatherArray['name'];
