@@ -10,18 +10,20 @@
 
       $weatherArray = json_decode($weatherApiData, true);
 
-      /*print_r($weatherArray);*/
+      if($weatherArray['cod'] == 200) {
+        $city = $weatherArray['name'];
 
-      $city = $weatherArray['name'];
+        $timezone = $weatherArray['timezone'];
+        $currentTime = time() + $timezone;
+        $realTime = gmdate('H:i', $currentTime);
 
-      $timezone = $weatherArray['timezone'];
-      $currentTime = time() + $timezone;
-      $realTime = gmdate('H:i', $currentTime);
-
-      $weather = $weatherArray['weather'][0]['description'];
-      $celcius = $weatherArray['main']['temp'] - 273;
-      $celciusH = $weatherArray['main']['temp_max'] - 273;
-      $celciusL = $weatherArray['main']['temp_min'] - 273;
+        $weather = $weatherArray['weather'][0]['description'];
+        $celcius = $weatherArray['main']['temp'] - 273;
+        $celciusH = $weatherArray['main']['temp_max'] - 273;
+        $celciusL = $weatherArray['main']['temp_min'] - 273;
+      } else {
+        $error = "Couldn't find the city name, enter a valid one.";
+      }
 
     }
 
@@ -110,7 +112,7 @@
             }
 
             if($error) {
-              echo '<div>'.$error.'<div>';
+              echo '<div style="margin: 15px 0px; color: red;">'.$error.'<div>';
             }
 
           ?>
