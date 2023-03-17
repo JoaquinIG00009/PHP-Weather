@@ -10,11 +10,14 @@
 
       $weatherArray = json_decode($weatherApiData, true);
 
-      
-      
+      /*print_r($weatherArray);*/
 
       $city = $weatherArray['name'];
+
       $timezone = $weatherArray['timezone'];
+      $currentTime = time() + $timezone;
+      $realTime = gmdate('H:i', $currentTime);
+
       $weather = $weatherArray['weather'][0]['description'];
       $celcius = $weatherArray['main']['temp'] - 273;
       $celciusH = $weatherArray['main']['temp_max'] - 273;
@@ -97,7 +100,7 @@
             if($weather) {
               echo '<div class="city">
                       <div>
-                        <div><h3>'. $city .'</h3><br><!--'. $timezone .'--></div>
+                        <div><h3>'. $city .'</h3><br>'. $realTime .'</div>
                         <div style="text-transform: capitalize;">'. $weather .'</div>
                       </div>
                       <div style="display: flex; flex-direction: column; justify-content: space-between;"><h1 style="text-align: right;">'. substr($celcius, 0, -3) .'&deg;</h1>
